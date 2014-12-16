@@ -87,4 +87,21 @@ public class StaticInitialisationTest {
 		assertEquals(rv.getReturnStringValue(), "stringValue");
 	}
 	
+	
+	@Test
+	public void testNoInterfaceStaticVariableAssignInnerInterface() throws Exception {
+		Map<String, Object> values = new HashMap<String, Object>();
+		values.put("returnValue", 3);
+		values.put("returnStringValue", "stringValue");
+		
+		IInnerReturnValue rv = Cut.create(FailOnStaticVariableInitialiseNoInterface.class, IInnerReturnValue.class, values);
+		assertEquals(rv.getReturnValue(), 3);
+		assertEquals(rv.getReturnStringValue(), "stringValue");
+	}
+	
+	public static interface IInnerReturnValue {
+		int getReturnValue();
+
+		String getReturnStringValue();
+	}
 }
