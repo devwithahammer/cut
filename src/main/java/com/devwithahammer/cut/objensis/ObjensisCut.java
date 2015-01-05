@@ -11,7 +11,7 @@ public class ObjensisCut {
 	
 	private final Populator populator = new Populator();
 	
-	private final ObjenesisStd objenesis = new ObjenesisStd();
+	private final ObjenesisStd objenesis = new ObjenesisStd(false);
 
 	public <T> T create(Class<T> clazz) {
 		return create(clazz, new HashMap<String, Object>());
@@ -24,5 +24,4 @@ public class ObjensisCut {
 		
 		return instance;
 	}
-
 }

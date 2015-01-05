@@ -14,6 +14,7 @@ import com.devwithahammer.cut.Cut;
 import com.devwithahammer.cut.testclasses.FailOnStaticInitialiseNoInterface;
 import com.devwithahammer.cut.testclasses.FailOnStaticInitialiseWithInterface;
 import com.devwithahammer.cut.testclasses.FailOnStaticVariableInitialiseNoInterface;
+import com.devwithahammer.cut.testclasses.FailOnStaticVariableInitialiseNoInterfaceConstructor;
 import com.devwithahammer.cut.testclasses.FailOnStaticVariableInitialiseWithInterface;
 import com.devwithahammer.cut.testclasses.IReturnValue;
 
@@ -103,5 +104,16 @@ public class StaticInitialisationTest {
 		int getReturnValue();
 
 		String getReturnStringValue();
+	}
+	
+	@Test
+	public void testNoInterfaceStaticVariableAssignConstructor() throws Exception {
+		Map<String, Object> values = new HashMap<String, Object>();
+		values.put("returnValue", 3);
+		values.put("returnStringValue", "stringValue");
+		
+		IReturnValue rv = Cut.create(FailOnStaticVariableInitialiseNoInterfaceConstructor.class, IReturnValue.class, values);
+		assertEquals(rv.getReturnValue(), 3);
+		assertEquals(rv.getReturnStringValue(), "stringValue");
 	}
 }

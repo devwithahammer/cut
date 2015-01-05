@@ -1,5 +1,9 @@
 package com.devwithahammer.cut.asm;
 
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+
 class InterfaceUpdater {
 	
 	private InterfaceUpdater(){};
@@ -16,13 +20,9 @@ class InterfaceUpdater {
 		
 		return new InterfaceUpdater() {
 			public String[] getInterfaces(String[] interfaces) {
-				String [] newInterfaces = new String[interfaces.length + 1];
-				
-				for (int i = 0; i < interfaces.length; i++) {
-					newInterfaces[i] = interfaces[i];
-				}
-				newInterfaces[interfaces.length] = returnClass.getName().replace(".", "/");
-				return newInterfaces;
+				List<String> newInterfaces = new ArrayList<String>(Arrays.asList(interfaces));
+				newInterfaces.add(returnClass.getName().replace(".", "/"));
+				return newInterfaces.toArray(new String[newInterfaces.size()]);
 			}
 		};
 	}

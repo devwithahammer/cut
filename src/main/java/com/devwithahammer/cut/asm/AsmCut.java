@@ -9,12 +9,15 @@ import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.ClassVisitor;
 import org.objectweb.asm.ClassWriter;
 import org.objectweb.asm.Opcodes;
+import org.objenesis.ObjenesisStd;
 
+import com.devwithahammer.cut.objensis.ObjensisCut;
 import com.devwithahammer.cut.reflect.Populator;
 
 public class AsmCut {
 	
 	private final Populator populator = new Populator();
+	private final ObjensisCut objensis = new ObjensisCut();
 	
 	public <T> T create(Class<?> inputClass, Class<T> returnClass) {	
 		return create(inputClass, returnClass, new HashMap<String, Object>());
@@ -26,7 +29,7 @@ public class AsmCut {
 		
 		Class<?> newClass = getNewClass(inputClass, newClassBytes);
 		
-		Object instance = getInstance(newClass);
+		Object instance = objensis.create(newClass);
 		
 		populator.populate(newClass, newClass.cast(instance), values);
 		
@@ -73,18 +76,6 @@ public class AsmCut {
 			throw new RuntimeException(e);
 		}
 		return newClass;
-	}
-	
-	private Object getInstance(Class<?> newClass){
-		Object instance;
-		try {
-			instance = newClass.newInstance();
-		} catch (InstantiationException e) {
-			throw new RuntimeException(e);
-		} catch (IllegalAccessException e) {
-			throw new RuntimeException(e);
-		}
-		return instance;
 	}
 	
 	private final static class CutClassLoader extends ClassLoader {
