@@ -8,7 +8,7 @@ Cut deals with two specific situations: Exceptions in constructors and exception
  
 This is a simple case of passing the type and getting an instance (created using objensis).
  
-Say we have the following class 
+Say we have the following class  
 
 ```java
 public class Foo {
